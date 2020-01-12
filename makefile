@@ -70,6 +70,8 @@ test: test-objects
 	@echo "Making symlink: $(TEST_BIN_NAME) -> $<"
 	@$(RM) $(TEST_BIN_NAME)
 	@ln -s $(BIN_PATH)/$(TEST_BIN_NAME) $(TEST_BIN_NAME)
+	@echo "Running tests:"
+	./$(TEST_BIN_NAME)
 
 # Add dependency files, if they exist
 -include $(DEPS)

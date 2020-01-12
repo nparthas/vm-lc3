@@ -3,11 +3,15 @@
 #include "../include/project/operations.h"
 #include "../include/project/vm_lc3_types.h"
 
-START_TEST(test_add_register_mode) {
+LC3State set_up_state(void) {
     LC3State state = {
         .running = 0, .error = 0, .error_msg = "", .reg = {0}, .memory = {0}};
     state.reg[R_PC] = PC_START;
+    return state;
+}
 
+START_TEST(test_add_register_mode) {
+    LC3State state = set_up_state();
     size_reg instr_add = ((OP_ADD & 0x0F) << 12) | ((R_R0 & 0x07) << 9) |
                          ((R_R1 & 0x07) << 6) | ((R_R2 & 0x07));
     state.memory[PC_START] = instr_add;
