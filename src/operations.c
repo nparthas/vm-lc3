@@ -151,7 +151,7 @@ void add(size_reg instr, LC3State* state) {
     Register r0 = (instr >> 9) & 0x07;
     Register r1 = (instr >> 6) & 0x07;
 
-    size_reg imm_flag = (instr >> 5) & 0x01;  // check
+    size_reg imm_flag = (instr >> 5) & 0x01;
 
     if (imm_flag) {
         size_reg imm = sign_extend(instr & 0x1F, 5);
@@ -189,17 +189,16 @@ void jump_register(size_reg instr, LC3State* state) {
     } else {
         state->reg[R_PC] = state->reg[r1];
     }
-    // break here
 }
 
 void and_bitwise(size_reg instr, LC3State* state) {
     Register r0 = (instr >> 9) & 0x07;
     Register r1 = (instr >> 6) & 0x07;
 
-    size_reg imm_flag = (instr >> 5) & 0x01;  // check
+    size_reg imm_flag = (instr >> 5) & 0x01;
 
     if (imm_flag) {
-        size_reg imm = sign_extend(instr >> 0x1F, 5);
+        size_reg imm = sign_extend(instr & 0x1F, 5);
         state->reg[r0] = state->reg[r1] & imm;
     } else {
         Register r2 = instr & 0x07;
