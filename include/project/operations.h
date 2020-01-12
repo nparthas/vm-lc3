@@ -14,6 +14,8 @@ void mem_write(size_reg address, size_reg val, size_reg memory[]);
 
 size_reg mem_read(size_reg address, size_reg memory[]);
 
+void read_execute(LC3State* state);
+
 /*** Assembly Operations **/
 
 // TODO:: implement state

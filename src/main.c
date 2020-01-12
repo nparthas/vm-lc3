@@ -50,69 +50,12 @@ int main(int argc, const char* argv[]) {
 
     state.running = 1;
     while (state.running && !state.error) {
-        size_reg instr = mem_read(state.reg[R_PC]++, state.memory);
-        size_reg op = instr >> 12;
-
-        switch (op) {
-            case OP_BR:
-                branch(instr, &state);
-                break;
-            case OP_ADD:
-                add(instr, &state);
-                break;
-            case OP_LD:
-                load(instr, &state);
-                break;
-            case OP_ST:
-                store(instr, &state);
-                break;
-            case OP_JSR:
-                jump_register(instr, &state);
-                break;
-            case OP_AND:
-                and_bitwise(instr, &state);
-                break;
-            case OP_LDR:
-                load_register(instr, &state);
-                break;
-            case OP_STR:
-                store_register(instr, &state);
-                break;
-            case OP_RTI:
-                return_from_interrupt(instr, &state);
-                break;
-            case OP_NOT:
-                not_bitwise(instr, &state);
-                break;
-            case OP_LDI:
-                load_indirect(instr, &state);
-                break;
-            case OP_STI:
-                store_indirect(instr, &state);
-                break;
-            case OP_JMP:
-                jump(instr, &state);
-                break;
-            case OP_RES:
-                reserved(instr, &state);
-                break;
-            case OP_LEA:
-                load_effective_address(instr, &state);
-                break;
-            case OP_TRAP:
-                trap(instr, &state);
-                break;
-            default:
-                LC3_SET_ERROR(&state, "Error: operation not recognized");
-                break;
-        }
+        read_execute(&state);
     }
-
-    // do shutdown
 
     if (state.error) {
         printf("%s\n", state.error_msg);
-        return 100;
+        return 101;
     }
 
     printf("Exiting execution\n");
